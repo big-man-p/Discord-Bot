@@ -1,6 +1,6 @@
 import { readdirSync } from "fs";
-import { CliCommand } from "../../models";
-import { log, logError } from "../../utilities";
+import { log, logError } from "../utilities";
+import { CliCommand } from "../models";
 
 const commands = new Map<string, CliCommand>();
 

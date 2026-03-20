@@ -1,5 +1,5 @@
 import { SlashCommandBuilder, ChatInputCommandInteraction } from "discord.js";
-import { BotCommand } from "../../../../models";
+import { BotCommand } from "../../../models";
 
 const data = new SlashCommandBuilder().setName("ping").setDescription("Replies with Pong");
 

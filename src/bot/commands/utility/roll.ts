@@ -1,6 +1,6 @@
 import { SlashCommandBuilder, ChatInputCommandInteraction } from "discord.js";
-import { BotCommand } from "../../../../models";
-import { randomInt } from "../../../../utilities";
+import { BotCommand } from "../../../models";
+import { randomInt } from "../../../utilities";
 
 const data = new SlashCommandBuilder()
   .setName("roll")

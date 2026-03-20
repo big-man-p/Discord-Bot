@@ -9,7 +9,7 @@ import {
   ComponentType,
   GuildTextBasedChannel,
 } from "discord.js";
-import { BotCommand } from "../../../../models";
+import { BotCommand } from "../../../models";
 
 interface IWaifu {
   endpoint: string;
@@ -110,14 +110,14 @@ const waifuMenu = new StringSelectMenuBuilder()
     },
   ]);
 
-const rerollButton = new ButtonBuilder().setCustomId("next").setLabel("Next").setStyle(ButtonStyle.Primary);
-const saveImage = new ButtonBuilder().setCustomId("save_image").setLabel("Save Image").setStyle(ButtonStyle.Secondary);
-const iLostButton = new ButtonBuilder().setCustomId("i_lost").setLabel("I Lost").setStyle(ButtonStyle.Secondary);
-const actionRowMenu = new ActionRowBuilder().addComponents(waifuMenu);
-const standardActionRowButtons = new ActionRowBuilder().addComponents(rerollButton, saveImage, iLostButton);
+const rerollButton              = new ButtonBuilder().setCustomId("next").setLabel("Next").setStyle(ButtonStyle.Primary);
+const saveImage                 = new ButtonBuilder().setCustomId("save_image").setLabel("Save Image").setStyle(ButtonStyle.Secondary);
+const iLostButton               = new ButtonBuilder().setCustomId("i_lost").setLabel("I Lost").setStyle(ButtonStyle.Secondary);
+const actionRowMenu             = new ActionRowBuilder().addComponents(waifuMenu);
+const standardActionRowButtons  = new ActionRowBuilder().addComponents(rerollButton, saveImage, iLostButton);
 const saveImageActionRowButtons = new ActionRowBuilder().addComponents(rerollButton, iLostButton);
-const instance = new EmbedBuilder().setTitle("Embrace the Waifus");
-const data = new SlashCommandBuilder().setName("waifu").setDescription("God I love looking at waifus");
+const instance                  = new EmbedBuilder().setTitle("Embrace the Waifus");
+const data                      = new SlashCommandBuilder().setName("waifu").setDescription("God I love looking at waifus");
 
 async function execute(interaction: CommandInteraction) {
   const response = await fetch(`https://nekos.life/api/v2/img/avatar`);

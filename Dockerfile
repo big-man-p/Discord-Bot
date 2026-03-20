@@ -4,4 +4,4 @@ COPY package.json package-lock.json ./
 RUN npm ci
 COPY build/ ./build
 WORKDIR /app/build
-CMD ["node", "index.js"]
+CMD ["node", "main.js"]

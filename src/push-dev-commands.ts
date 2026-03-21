@@ -7,11 +7,11 @@ import { BotCommand } from "./models";
 const commands: RESTPostAPIChatInputApplicationCommandsJSONBody[] = [];
 const rest = new REST().setToken(process.env.DISCORD_TOKEN as string);
 
-const commandFiles = readdirSync("./services/bot/commands", { recursive: true }).filter((file) =>
+const commandFiles = readdirSync("./bot/commands", { recursive: true }).filter((file) =>
   file.toString().endsWith(".js")
 );
 commandFiles.forEach((commandFile) => {
-  const command = require(path.join(__dirname, "./services/bot/commands", commandFile.toString()));
+  const command = require(path.join(__dirname, "./bot/commands", commandFile.toString()));
 
   if (command.default satisfies BotCommand) {
     commands.push(command.default.data.toJSON());
@@ -26,14 +26,14 @@ commandFiles.forEach((commandFile) => {
     console.log(`Started refreshing ${commands.length} application (/) commands.`);
 
     await rest.put(
-      Routes.applicationGuildCommands(process.env.CLIENT_ID as string, process.env.TEST_SERVER_ID as string),
+      Routes.applicationGuildCommands(process.env.CLIENT_ID as string, "436914784676610078"),
       { body: [] }
     );
 
     console.log("Deleted all commands for the Bot Testing server.");
 
     const data: any = await rest.put(
-      Routes.applicationGuildCommands(process.env.CLIENT_ID as string, process.env.TEST_SERVER_ID as string),
+      Routes.applicationGuildCommands(process.env.CLIENT_ID as string, "436914784676610078"),
       { body: commands }
     );
 

@@ -1,6 +1,6 @@
-import { Channel, Client, GuildTextBasedChannel } from "discord.js";
-import { CliCommand } from "../../../models";
-import { logError } from "../../../utilities";
+import { Channel, Client } from "discord.js";
+import { logError } from "../../utilities";
+import { CliCommand } from "../../models";
 
 const alias = "create-message";
 const description = "Creates and sends a message into a user specified text channel."
@@ -36,4 +36,4 @@ async function execute(client: Client, args: string[]): Promise<void> {
   channel.send(message);
 }
 
-export default { alias, description, execute } satisfies CliCommand
+export default { alias, description, execute } satisfies CliCommand;

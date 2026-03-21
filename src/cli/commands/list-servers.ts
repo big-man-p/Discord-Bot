@@ -1,6 +1,6 @@
 import { Client } from "discord.js";
-import { log } from "../../../utilities";
-import { CliCommand } from "../../../models";
+import { log } from "../../utilities";
+import { CliCommand } from "../../models";
 
 const alias: string = "list-servers";
 const description: string = "Lists all the servers the bot is a part of.";

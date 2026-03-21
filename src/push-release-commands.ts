@@ -7,11 +7,11 @@ import { BotCommand } from "./models";
 const commands: RESTPostAPIChatInputApplicationCommandsJSONBody[] = [];
 const rest = new REST().setToken(process.env.DISCORD_TOKEN as string);
 
-const commandFiles = readdirSync("./services/bot/commands", { recursive: true }).filter((file) =>
+const commandFiles = readdirSync("./bot/commands", { recursive: true }).filter((file) =>
   file.toString().endsWith(".js")
 );
 commandFiles.forEach((commandFile) => {
-  const command = require(path.join(__dirname, "./services/bot/commands", commandFile.toString()));
+  const command = require(path.join(__dirname, "./bot/commands", commandFile.toString()));
 
   if (command.default satisfies BotCommand) {
     commands.push(command.default.data.toJSON());
@@ -25,7 +25,7 @@ commandFiles.forEach((commandFile) => {
   try {
     console.log(`Started refreshing ${commands.length} application (/) commands.`);
 
-    const data: any = await rest.put(Routes.applicationCommands(process.env.CLIENT_ID as string), { body: commands });
+    const data: any = await rest.put(Routes.applicationCommands("436914784676610078"), { body: commands });
 
     console.log(`Successfully reloaded ${data.length} application (/) commands.`);
   } catch (e) {

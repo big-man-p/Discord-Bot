@@ -1,6 +1,6 @@
 import { Client } from "discord.js";
-import { log } from "../../../utilities";
-import { CliCommand } from "../../../models";
+import { log } from "../../utilities";
+import { CliCommand } from "../../models";
 import { commands } from "../command-manager";
 
 const alias: string = "help";

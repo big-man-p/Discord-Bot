@@ -1,7 +1,7 @@
-FROM node:20-alpine
+FROM node:alpine
 WORKDIR /app
-COPY package.json package-lock.json ./
+COPY package.json ./
+COPY package-lock.json ./
+COPY build ./build
 RUN npm ci
-COPY build/ ./build
-WORKDIR /app/build
-CMD ["node", "main.js"]
+CMD ["node", "build/main.js"]

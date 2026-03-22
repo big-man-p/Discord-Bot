@@ -1,9 +1,9 @@
 {
   "name": "discord-bot",
-  "version": "2.0.0",
+  "version": "2.2.0",
   "main": "./main.js",
   "scripts": {
-    "create-image": "powershell.exe scripts/create-image.ps1",
+    "deploy": "powershell.exe scripts/deploy-docker-image.ps1",
     "dev": "powershell.exe scripts/start-dev.ps1",
     "push-dev-commands": "tsc && node build/push-dev-commands.js",
     "push-release-commands": "powershell.exe scripts/push-release-commands.ps1"

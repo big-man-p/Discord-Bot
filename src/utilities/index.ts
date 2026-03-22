@@ -1,5 +1,5 @@
 export { default as timestamp } from "./timestamp";
-export { default as log } from "./log";
+export { default as logText } from "./log-text";
 export { default as logWarning } from "./log-warning";
 export { default as logError } from "./log-error";
 export { default as logDebug } from "./log-debug";

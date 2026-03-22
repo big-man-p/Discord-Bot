@@ -1,6 +1,6 @@
 import { Interaction, MessageFlags } from "discord.js";
 import { commands } from "../command-manager";
-import { log, logError } from "../../utilities";
+import { logText, logError } from "../../utilities";
 
 async function onInteractionCreate(interaction: Interaction) {
   if (!interaction.isChatInputCommand()) return;
@@ -25,7 +25,7 @@ async function onInteractionCreate(interaction: Interaction) {
     }
   }
 
-  log(`Command "${interaction.commandName}" executed by ${interaction.user.tag}`);
+  logText(`Command "${interaction.commandName}" executed by ${interaction.user.tag}`);
 }
 
 export default onInteractionCreate;

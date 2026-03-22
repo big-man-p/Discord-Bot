@@ -1,13 +1,13 @@
 import { readdirSync } from "fs";
 import { BotCommand } from "../models";
-import { log, logError } from "../utilities";
+import { logText, logError } from "../utilities";
 
 const commands = new Map<string, BotCommand>();
 
 function loadCommands(directory: string) {
   const folders: string[] = readdirSync(directory);
 
-  log(">>> Loading Bot Commands <<<");
+  logText(">>> Loading Bot Commands <<<");
 
   for (const folder of folders) {
     const commandDirectory: string = `${directory}/${folder}`;
@@ -17,7 +17,7 @@ function loadCommands(directory: string) {
       const command: BotCommand = require(`${commandDirectory}/${file}`).default;
       if (command satisfies BotCommand) {
         commands.set(command.data.name, command);
-        log(`Command "${command.data.name}" loaded`);
+        logText(`Command "${command.data.name}" loaded`);
       } else {
         logError(`Command "${command.data.name}" does not satisfy the type BotCommand`);
       }

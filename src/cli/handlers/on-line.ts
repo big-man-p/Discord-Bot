@@ -1,4 +1,4 @@
-import { CliCommand } from "../../models";
+import { CliCommand } from "../../types";
 import bot from "../../bot";
 import { commands } from "../command-manager";
 

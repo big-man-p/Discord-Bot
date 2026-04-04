@@ -9,7 +9,7 @@ import {
   ComponentType,
   GuildTextBasedChannel,
 } from "discord.js";
-import { BotCommand } from "../../../models";
+import { BotCommand } from "../../../types";
 
 interface IWaifu {
   endpoint: string;

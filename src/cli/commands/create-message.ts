@@ -1,6 +1,6 @@
 import { Channel, Client } from "discord.js";
 import { logError } from "../../utilities";
-import { CliCommand } from "../../models";
+import { CliCommand } from "../../types";
 
 const alias = "create-message";
 const description = "Creates and sends a message into a user specified text channel."

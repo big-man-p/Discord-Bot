@@ -1,5 +1,5 @@
 import { readdirSync } from "fs";
-import { BotCommand } from "../models";
+import { BotCommand } from "../types";
 import { logText, logError } from "../utilities";
 
 const commands = new Map<string, BotCommand>();

@@ -1,5 +1,5 @@
 ﻿import { SlashCommandBuilder, EmbedBuilder, ChatInputCommandInteraction } from "discord.js";
-import { BotCommand } from "../../../models";
+import { BotCommand } from "../../../types";
 
 const data = new SlashCommandBuilder().setName("about").setDescription("Learn about me.");
 

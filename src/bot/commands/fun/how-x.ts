@@ -1,5 +1,5 @@
 import { SlashCommandBuilder, CommandInteraction, EmbedBuilder } from "discord.js";
-import { BotCommand } from "../../../models";
+import { BotCommand } from "../../../types";
 import { randomInt } from "../../../utilities";
 
 const data = new SlashCommandBuilder()

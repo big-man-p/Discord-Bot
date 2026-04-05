@@ -3,7 +3,6 @@ import { commands, loadCommands } from "./command-manager";
 import { onInteractionCreate, onMessageCreated, onReady } from "./handlers";
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
-const aiLogs: AiLogEntry[] = [];
 
 function start(token: string) {
   loadCommands(`${__dirname}/commands`);
@@ -14,7 +13,6 @@ function start(token: string) {
 }
 
 export default {
-  aiLogs,
   client,
   commands,
   start,

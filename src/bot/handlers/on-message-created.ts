@@ -7,6 +7,7 @@ const FAKEAWAKE_USER_ID = "707698652076048406";
 const ollama: Ollama = new Ollama({ host: process.env.OLLAMA_HOST });
 const chats: Map<string, ChatRequest["messages"]> = new Map();
 const chatExpiryTimers: Map<string, NodeJS.Timeout> = new Map();
+const MAX_CHAT_HISTORY = 20;
 const CHAT_EXPIRY_TIME = 30 * 60 * 1000; // 30 minutes
 const SYSTEM_PROMPT = {
   role: "system",
@@ -25,23 +26,23 @@ function resetChatExpiryTimer(channelId: string) {
   }, CHAT_EXPIRY_TIME));
 }
 
-function getAllAiChatHistory() {
+function getChats() {
   return Array.from(chats.entries())
-  .map(([channelId, messages]) => ({
-    channelId,
-    messages: (messages!)
-    .filter(msg => msg.role !== "system")
-    .map(msg => ({
-      role: msg.role,
-      content: msg.content,
-      images: `${msg.images ? msg.images.length : 0} image(s)` // Just indicate number of images to avoid dumping large base64 strings
-    }))
-  }));
+    .map(([channelId, messages]) => ({
+      channelId,
+      messages: (messages!)
+        .filter(msg => msg.role !== "system")
+        .map(msg => ({
+          role: msg.role,
+          content: msg.content,
+          images: `${msg.images ? msg.images.length : 0} image(s)` // Just indicate number of images to avoid dumping large base64 strings
+        }))
+    }));
 }
 
 export async function onMessageCreated(message: OmitPartialGroupDMChannel<Message<boolean>>) {
   if (message.author.id === FAKEAWAKE_USER_ID) return; // Ignore messages from bots
-  
+
   /***** Track Discord channel messages *****/
   const content = `${message.member?.nickname || message.author.displayName}: ${message.cleanContent}`;
   const images = await Promise.all(
@@ -64,6 +65,9 @@ export async function onMessageCreated(message: OmitPartialGroupDMChannel<Messag
   } else {
     const chat = chats.get(message.channelId)!;
     chat.push(userMessage);
+    if (chat.length > MAX_CHAT_HISTORY) {
+      chat.splice(1, chat.length - MAX_CHAT_HISTORY); // Keep system prompt and last MAX_CHAT_HISTORY - 1 messages
+    }
     chats.set(message.channelId, chat);
   }
 
@@ -82,7 +86,7 @@ export async function onMessageCreated(message: OmitPartialGroupDMChannel<Messag
 
   // Generate response
   await message.channel.sendTyping()
-                       .catch(err => logError(`Error sending typing indicator: ${err}`));
+    .catch(err => logError(`Error sending typing indicator: ${err}`));
 
   const chat = chats.get(message.channelId);
   if (!chat) {
@@ -114,4 +118,4 @@ export async function onMessageCreated(message: OmitPartialGroupDMChannel<Messag
 }
 
 export default onMessageCreated;
-export { getAllAiChatHistory };
+export { getChats };

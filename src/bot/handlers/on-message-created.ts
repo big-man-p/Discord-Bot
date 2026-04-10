@@ -1,7 +1,7 @@
 import { ChatRequest, ChatResponse, Ollama } from "ollama";
 import { readFileSync } from "fs";
 import { Message, OmitPartialGroupDMChannel } from "discord.js";
-import { logError } from "../../utilities";
+import { logError, logText } from "../../utilities";
 
 const FAKEAWAKE_USER_ID = "707698652076048406";
 const ollama: Ollama = new Ollama({ host: process.env.OLLAMA_HOST });
@@ -12,7 +12,8 @@ const CHAT_EXPIRY_TIME = 30 * 60 * 1000; // 30 minutes
 const SYSTEM_PROMPT = {
   role: "system",
   content: readFileSync("./bot/system-prompt.md", "utf-8")
-}
+};
+const VALID_IMAGE_TYPES = ["image/png", "image/jpeg"];
 
 function resetChatExpiryTimer(channelId: string) {
   if (chatExpiryTimers.has(channelId)) {
@@ -45,14 +46,20 @@ export async function onMessageCreated(message: OmitPartialGroupDMChannel<Messag
 
   /***** Track Discord channel messages *****/
   const content = `${message.member?.nickname || message.author.displayName}: ${message.cleanContent}`;
-  const images = await Promise.all(
+  const images = (await Promise.all(
     message.attachments.map(async (attachment) => {
+      // Only accept images. Gifs or other formats crash the bot :(
+      if (!attachment.contentType) return "";
+      if (!VALID_IMAGE_TYPES.includes(attachment.contentType)) return "";
       const res = await fetch(attachment.url);
       const buffer = Buffer.from(await res.arrayBuffer());
 
       return buffer.toString("base64");
     })
-  );
+  )).filter((img) => img !== "");
+
+  logText(`[AI] Received message in channel ${message.channelId}: ${content} with ${images.length} image(s)`);
+  logText(`[AI] Content types: ${message.attachments.map(att => att.contentType).join(", ")}`);
 
   const userMessage = {
     role: "user",

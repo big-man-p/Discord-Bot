@@ -13,7 +13,7 @@ const SYSTEM_PROMPT = {
   role: "system",
   content: readFileSync("./bot/system-prompt.md", "utf-8")
 };
-const VALID_IMAGE_TYPES = ["image/png", "image/jpeg"];
+const VALID_MEDIA_TYPES = ["image/png", "image/jpeg"];
 
 function resetChatExpiryTimer(channelId: string) {
   if (chatExpiryTimers.has(channelId)) {
@@ -50,7 +50,7 @@ export async function onMessageCreated(message: OmitPartialGroupDMChannel<Messag
     message.attachments.map(async (attachment) => {
       // Only accept images. Gifs or other formats crash the bot :(
       if (!attachment.contentType) return "";
-      if (!VALID_IMAGE_TYPES.includes(attachment.contentType)) return "";
+      if (!VALID_MEDIA_TYPES.includes(attachment.contentType)) return "";
       const res = await fetch(attachment.url);
       const buffer = Buffer.from(await res.arrayBuffer());
 

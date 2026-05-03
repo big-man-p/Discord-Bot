@@ -1,6 +1,6 @@
 import { ChatRequest, ChatResponse, Ollama } from "ollama";
 import { readFileSync } from "fs";
-import { Message, OmitPartialGroupDMChannel } from "discord.js";
+import { GuildMember, Message, OmitPartialGroupDMChannel } from "discord.js";
 import { logError, logText } from "../../utilities";
 
 const FAKEAWAKE_USER_ID = "707698652076048406";

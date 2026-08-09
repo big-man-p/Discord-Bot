@@ -62,7 +62,7 @@ function leaveByGuildId(guildId: string) {
   logText(`[Call Manager] Left voice channel in guild ${guildName}`);
 }
 
-function get(guildId: string): VoiceConnection | null {
+function get(guildId: string): VoiceConnection | void {
   const connection = getVoiceConnection(guildId);
 
   if (!connection) {
